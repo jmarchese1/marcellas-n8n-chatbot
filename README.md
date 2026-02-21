@@ -1,6 +1,3 @@
-# marcellas-n8n-chatbot
-AI-powered chatbot built with n8n to automate customer interactions, answer questions, and support guests for Marcella's Italian Kitchen.
-
 # Marcellas n8n RAG Chatbot
 
 An embedded AI chatbot built to power intelligent conversations on the Marcellas website.
