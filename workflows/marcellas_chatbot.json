@@ -1,0 +1,352 @@
+{
+  "name": "marcellas chatbot",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "mode": "webhook",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -192,
+        16
+      ],
+      "id": "67cacfbf-4766-4820-a436-9ef5216cb21a",
+      "name": "When chat message received",
+      "webhookId": "bb470aba-d79b-40d1-889c-1b17528bc4b3"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=## Role:\nYou are a friendly assistant for an Italian restaurant named **Marcellas** located in short north, Columbus, Ohio. All of your answers are positive about marcellas. \n\n## Task \nYou answer questions about the restaurant.\nYour secondary task is to gather lead information on customers who interact with you.\n\n## Details\nYou have access to various tools which you use correctly.\n\n## Tools\n- **marcellas_q** \n  use this tool to answer questions with knowledge about the restaurant\n\n- **sheets**\n  use this tool to store contact information such as name, email, interest in, and phone number. \n\n\nWhile collecting information on customers do not be too aggresive but nudge them to provide details."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        32,
+        16
+      ],
+      "id": "4a6e91c6-fd9c-48f5-8eae-983612783a29",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "gpt-4o"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -256,
+        304
+      ],
+      "id": "f8b93c49-f230-4e42-8aad-86d645eeef41",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "2Fp8r3Rqagfx7zT7",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -32,
+        304
+      ],
+      "id": "0b841d0c-6df0-4bea-abcf-f239af414969",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "marcellaagent",
+          "mode": "list",
+          "cachedResultName": "marcellaagent"
+        },
+        "options": {
+          "pineconeNamespace": "restaurant"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        32,
+        528
+      ],
+      "id": "3c936662-9025-4b56-93fa-3baaaa32ac1b",
+      "name": "Pinecone Vector Store",
+      "credentials": {
+        "pineconeApi": {
+          "id": "U7h4cu93tdAlhDSd",
+          "name": "PineconeApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -64,
+        720
+      ],
+      "id": "e550020f-9dd7-479f-9771-411d5d0036ff",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "2Fp8r3Rqagfx7zT7",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "chatgpt-4o-latest",
+          "mode": "list",
+          "cachedResultName": "chatgpt-4o-latest"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        432,
+        512
+      ],
+      "id": "e33a0baa-4ea6-4169-96cd-46ecb60eeef6",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "2Fp8r3Rqagfx7zT7",
+          "name": "OpenAi account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "description": "gives answers related to Marcellas "
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1.1,
+      "position": [
+        160,
+        288
+      ],
+      "id": "34b30e7f-f221-405d-b939-e4bc910a76d7",
+      "name": "Marcellas_q"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "12litu4bx_IwaHFcgQN-kcbPbbEf1_fTt6SjAgh7MUuc",
+          "mode": "list",
+          "cachedResultName": "Marcellas Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/12litu4bx_IwaHFcgQN-kcbPbbEf1_fTt6SjAgh7MUuc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/12litu4bx_IwaHFcgQN-kcbPbbEf1_fTt6SjAgh7MUuc/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Interested In": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Interested_In', ``, 'string') }}",
+            "Email": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Email', ``, 'string') }}",
+            "Phone ": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Phone_', ``, 'string') }}",
+            "Name": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Name', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Phone ",
+              "displayName": "Phone ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Interested In",
+              "displayName": "Interested In",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        544,
+        288
+      ],
+      "id": "fbfc9285-0177-4278-a6af-610764d7ad7a",
+      "name": "Append row in sheet in Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "6SsPPxLjD2pkIMfj",
+          "name": "Google Sheets account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinecone Vector Store": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Marcellas_q",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Marcellas_q",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Marcellas_q": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet in Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "99745258-fc76-4eb1-aef8-38e04d4da0c1",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4ea573ce60f7bf5034c35ef0c9ed1ffb605140845ab0ffb7d03c3e6073457442"
+  },
+  "id": "coCadExmbXGTH7GIhDX5V",
+  "tags": [
+    {
+      "updatedAt": "2026-01-22T20:14:10.683Z",
+      "createdAt": "2026-01-22T20:14:10.683Z",
+      "id": "upggbMSp7fArX4U0",
+      "name": "marcellas agent"
+    }
+  ]
+}
